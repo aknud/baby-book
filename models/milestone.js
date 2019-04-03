@@ -12,7 +12,7 @@ const milestoneSchema = new Schema({
     },
     image: {
         type: Schema.Types.ObjectId,
-        ref: Photo
+        ref: "Photo"
     },
     description: String
 })

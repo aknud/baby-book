@@ -12,7 +12,7 @@ const noteSchema = new Schema({
     },
     image: {
         type: Schema.Types.ObjectId,
-        ref: Photo
+        ref: "Photo"
     },
     description: {
         type: String,
