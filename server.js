@@ -5,10 +5,9 @@ const app = express()
 const expressJwt = require("express-jwt")
 
 
-let {PORT, MONGODB_URI} = process.env;
+let {PORT, MONGODB_URI, SECRET} = process.env;
 
 app.use(express.json())
-app.use("/api", expressJwt({secret: process.env.SECRET}))
 
 //connect to mongodb
 mongoose.set('useCreateIndex', true);
@@ -17,6 +16,7 @@ mongoose.connect(MONGODB_URI || "mongodb://localhost:27017/baby-book", {useNewUr
 //routes
 app.use("/auth", require("./routes/auth"))
 // routes requiring authentication
+app.use("/api", expressJwt({secret: SECRET}))
 app.use("/api/milestones", require("./routes/milestone"))
 
 // error handler

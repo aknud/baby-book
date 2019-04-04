@@ -34,9 +34,12 @@ milestoneRouter.post("/", async (req, res, next) => {
     //always do a try catch in async await db call otherwise it'll automatically throw an error
     try {
         const photo = await newPhoto.save()
+        // reassign req.body.image to equal photo id from db
         req.body.image = photo._id
         const newMilestone = new Milestone(req.body)
+        //save the milestone with the photo._id in place of the image url
         const savedMilestone = await newMilestone.save()
+        //send back both the milestone and the photo
         return res.status(201).send({savedMilestone, photo})
     }
     catch (err) {
