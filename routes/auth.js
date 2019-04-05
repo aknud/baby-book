@@ -7,7 +7,7 @@ const authRouter = express.Router()
 // Signup
 authRouter.post("/signup", (req, res, next) => {
     // Check to see if username already exists, if not register new user
-    User.findOne({username: req.body.username}, (err, existingUser) => {
+    User.findOne({username: req.body.username.toLowerCase()}, (err, existingUser) => {
         // handles any errors
         if(err){
             res.status(500)
@@ -20,6 +20,7 @@ authRouter.post("/signup", (req, res, next) => {
         }
         // If the above conditions are not true, make a new user
         const newUser = new User(req.body)
+        // pre-save hook fires, encrypts password, and then the .save() is executed
         newUser.save((err, user) => {
             if(err) return res.status(500).send({success: false, err})
             const token = jwt.sign(user.withoutPassword(), process.env.SECRET)

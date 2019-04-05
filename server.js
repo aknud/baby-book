@@ -18,6 +18,8 @@ app.use("/auth", require("./routes/auth"))
 // routes requiring authentication
 app.use("/api", expressJwt({secret: SECRET}))
 app.use("/api/milestones", require("./routes/milestone"))
+app.use("/api/notes", require("./routes/note"))
+app.use("/api/photos", require("./routes/photo"))
 
 // error handler
 app.use((err, req, res, next) => {

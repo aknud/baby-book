@@ -4,7 +4,8 @@ const {Provider, Consumer} = React.createContext()
 const authorizedAxios = axios.create()
 
 
-//use axios.create() to make an interceptor function to check token??
+
+//use axios.create() to make an interceptor function to check token and ads it to the headers?
 authorizedAxios.interceptors.request.use(config => {
     const token = localStorage.getItem("token")
     config.headers.Authorization = `Bearer ${token}`
@@ -18,52 +19,17 @@ export default class SharedContext extends Component{
         this.state = {
             milestones: [],
             notes: [],
-            photos: [],
-            user: JSON.parse(localStorage.getItem("user")) || {},
-            token: localStorage.getItem("token") || ""
+            photos: []
         }
     }
 
     componentDidMount() {
-        this.getMilestones()
-        this.getNotes()
+        // this.getMilestones()
+        // this.getNotes()
         this.getPhotos()
     }
     
-    signup = credentials => {
-        return authorizedAxios.post("/auth/signup", credentials).then(res => {
-            const {user, token} = res.data 
-            this.setState({
-                user,
-                token
-            })
-            // forward the response just in case it's needed down the promise chain.
-            return res
-        })
-    }
-
-    login = credentials => {
-        return authorizedAxios.post("/auth/login", credentials).then(res => {
-            const {user, token} = res.data 
-            localStorage.setItem("token", token)
-            localStorage.setItem("user", JSON.stringify(user))
-            this.setState({
-                user,
-                token
-            })
-            // Maybe invoke all the get functions??
-            return res
-        })
-    }
-
-    logout = () => {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        this.setState({
-            user: {},
-            token: ""
-        })
-    }
+    
 
     getMilestones = () => {
         return authorizedAxios.get("/api/milestones")
@@ -81,9 +47,16 @@ export default class SharedContext extends Component{
             })
     }
 
+    createNote = newNote => {
+        return authorizedAxios.post("/api/notes", newNote).then(res => {
+            console.log(res)
+        }).catch(err => console.log(err))
+    }
+
     getPhotos = () => {
-        return authorizedAxios.get("/api/notes")
+        return authorizedAxios.get("/api/photos")
             .then(res => {
+                console.log("response",res.data)
                 this.setState({ photos: res.data})
                 return res;
             })
@@ -92,12 +65,11 @@ export default class SharedContext extends Component{
     render(){
         return (
             <Provider value={{
-                signup: this.signup,
-                login: this.login,
-                logout: this.logout,
                 getMilestones: this.getMilestones,
                 getNotes: this.getNotes,
+                createNote: this.createNote,
                 getPhotos: this.getPhotos,
+
                 ...this.state
             }}>
                 {this.props.children}

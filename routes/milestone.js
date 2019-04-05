@@ -4,48 +4,81 @@ const Milestone = require("../models/milestone")
 // Im importing the Photo model so I can send the image url to the Photo Schema.
 const Photo = require("../models/photo")
 
-
-milestoneRouter.get("/", (req, res, next) => {
-    Milestone.find((err, milestones) => {
-        if(err){
+milestoneRouter.route("/")
+    .post( async (req, res, next) => {
+        //send the image url to the Photo Schema
+        const newPhoto = new Photo({image: req.body.image})
+        //always do a try catch in async await db call otherwise it'll automatically throw an error
+        try {
+            const photo = await newPhoto.save()
+            // reassign req.body.image to equal photo id from db
+            req.body.image = photo._id
+            const newMilestone = new Milestone(req.body)
+            //save the milestone with the photo._id in place of the image url
+            const savedMilestone = await newMilestone.save()
+            //send back both the milestone and the photo
+            return res.status(201).send({savedMilestone, photo})
+        }
+        catch (err) {
             res.status(500)
             return next(err)
         }
-        return res.send(milestones)
     })
-})
 
-milestoneRouter.get("/:_id", (req, res, next) => {
-    Milestone.findOne({_id: req.params._id}, (err, milestone) => {
-        if(err){
+    .get((req, res, next) => {
+        Milestone.find((err, milestones) => {
+            if(err){
+                res.status(500)
+                return next(err)
+            }
+            return res.send(milestones)
+        })
+    })
+
+milestoneRouter.route("/:_id")
+    .get((req, res, next) => {
+        Milestone.findOne({_id: req.params._id}, (err, milestone) => {
+            if(err){
+                res.status(500)
+                return next(err)
+            } else if(!milestone){
+                res.status(404)
+                return next(new Error("Milestone not found."))
+            }
+            return res.send(milestone)
+        })
+    })
+
+    .put( async (req, res, next) => {
+        //First check to see if the image url changed ? send an update to Photos : only update milestone
+        console.log(222,req.body)
+        try {
+            if(req.body.image_url){
+                const updatedPhoto = await Photo.findOneAndUpdate({_id: req.body.image}, {image: req.body.image_url}, {new: true}, photo => res.status(200).send(photo))
+                req.body.image = updatedPhoto._id
+                const updatedMilestone = Milestone.findOneAndUpdate({_id: req.params._id}, req.body, {new: true}, milestone => {
+                    return res.status(200).send(milestone)
+                })
+                return res.status(200).send(updatedMilestone, updatedPhoto)
+            } else {
+                const updatedMilestone =  await Milestone.findOneAndUpdate({_id: req.params._id}, req.body, {new: true}, (milestone) => {
+                    return res.status(200).send(milestone)
+                })
+                return updatedMilestone
+            }
+        }
+        catch(err){
             res.status(500)
             return next(err)
-        } else if(!milestone){
-            res.status(404)
-            return next(new Error("Milestone not found."))
         }
-        return res.send(milestone)
+        
+        // Milestone.findOneAndUpdate({_id: req.params._id}, req.body, {new: true}, (err, milestone) => {
+        //     if(err){
+        //         res.status(500)
+        //         return next(err)
+        //     }
+        //     return res.status(200).send(milestone)
+        // })
     })
-})
-
-milestoneRouter.post("/", async (req, res, next) => {
-    //send the image url to the Photo Schema
-    const newPhoto = new Photo({image: req.body.image})
-    //always do a try catch in async await db call otherwise it'll automatically throw an error
-    try {
-        const photo = await newPhoto.save()
-        // reassign req.body.image to equal photo id from db
-        req.body.image = photo._id
-        const newMilestone = new Milestone(req.body)
-        //save the milestone with the photo._id in place of the image url
-        const savedMilestone = await newMilestone.save()
-        //send back both the milestone and the photo
-        return res.status(201).send({savedMilestone, photo})
-    }
-    catch (err) {
-        res.status(500)
-        return next(err)
-    }
-})
 
 module.exports = milestoneRouter

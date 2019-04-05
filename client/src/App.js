@@ -1,22 +1,31 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Switch, Redirect } from "react-router-dom";
 import './App.css';
-import Signup from "./components/Auth/Signup";
-import Login from "./components/Auth/Login";
+import Landing from "./components/Landing";
+import AuthContainer from "./components/Auth/AuthContainer";
 import ProtectedRoute from './components/Auth/ProtectedRoute';
+import Milestones from "./components/Milestones"
+import Notes from "./components/Notes"
+import Photos from "./components/Photos"
+import {withUser} from './context/UserProvider'
 
-class App extends Component {
-  render() {
+const App = (props) => {
+
+    const { token, user, logout } = props
     return (
       <div className="App">
         <Switch>
-          {/* <Route path="/signup" component={Signup} /> */}
-          {/* <Route path="/login" component={Login} /> */}
-          {/* <ProtectedRoute path="/milestone" component={Milestone} /> */}
+          <Route exact path="/" 
+          render={routerProps => token ? <Redirect to="/landing"/> : <AuthContainer {...routerProps}/>}/>
+          <Route path="/landing" component={Landing} />
+          <ProtectedRoute token={token} path="/landing" redirectTo="/" component={Landing}/>
+          <ProtectedRoute token={token} path="/milestone" component={Milestones} />
+          <ProtectedRoute token={token} path="/notes" component={Notes} />
+          <ProtectedRoute token={token} path="/photos" component={Photos} />
+          <Route path="*" component={NotFound} />
         </Switch>
       </div>
     );
-  }
 }
 
-export default App;
+export default withUser(App);

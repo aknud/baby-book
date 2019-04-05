@@ -3,11 +3,12 @@ import {Route, Redirect} from "react-router-dom"
 import {withContext} from "./../../context/SharedContext"
 
 function ProtectedRoute(props){
-    const {component: Component, ...rest} = props;
+    // rest allows you to add more props later for the component to use.
+    const {token, path, redirectTo, component: Component, ...rest} = props;
     return (
-        props.token ? 
-            <Route {...rest} component={Component}/> :
-            <Redirect to="/login" />
+        token ? 
+            <Route {...rest} path={path} render={renderProps => <Component {...renderProps} {...rest}/>}/> :
+            <Redirect to={redirectTo} />
     )
 }
 
