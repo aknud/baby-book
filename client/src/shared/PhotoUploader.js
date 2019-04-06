@@ -32,21 +32,27 @@ class PhotoUploader extends Component {
                 "file-type": file.type
             }
         }).then(response => {
+            console.log("Hey it got a response!", response.data)
             const { signedRequest, url } = response.data
             this.uploadFile(file, signedRequest, url)
         }).catch(err => console.log(err))
     }
 
     uploadFile = (file, signedRequest, url) => {
+        console.log(file.type)
+        console.log(signedRequest)
+        console.log(url)
+        console.log("Omg upload file ran!")
         const options = {
             headers: {
                 "Content-Type": file.type
             }
         }
-        photoAxios.put(signedRequest, file, options).then(response => {
+        axios.put(signedRequest, file, options).then(response => {
+            console.log("I am in the put request .then!")
             this.setState({ isUploading: false, url})
             // AMY!! 
-            // This is where you could send the Url to the DB
+            // This is where you could send the url to the DB
         }).catch(err => {
             this.setState({
                 isUploading: false,
