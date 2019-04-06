@@ -8,6 +8,7 @@ import Milestones from "./components/Milestones"
 import Notes from "./components/Notes"
 import Photos from "./components/Photos"
 import NotFound from "./components/NotFound"
+import Nav from "./components/Nav"
 import {withUser} from './context/UserProvider'
 
 const App = (props) => {
@@ -15,6 +16,7 @@ const App = (props) => {
     const { token, user, logout } = props
     return (
       <div className="App">
+        {token ? <Nav logout={logout}/> : null}
         <Switch>
           <Route exact path="/" 
           render={routerProps => token ? <Redirect to="/landing"/> : <AuthContainer {...routerProps}/>}/>

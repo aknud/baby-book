@@ -50,7 +50,7 @@ class AuthContainer extends React.Component{
                                 btnText="Sign Up"
                             />
                             <p style={{color: "firebrick"}}>{this.props.errMsg}</p>
-                            <p onClick={this.authToggler}>Already a member? </p>
+                            <p onClick={this.authToggler}>Been here before? Click to go to login. </p>
                         </>
                     :
                         <>
@@ -63,7 +63,7 @@ class AuthContainer extends React.Component{
                                 btnText="Login"
                             />
                             <p style={{color: "firebrick"}}>{this.props.errMsg}</p>
-                            <p onClick={this.authToggler}>Not a member?</p>
+                            <p onClick={this.authToggler}>First time? Click to sign up!</p>
                         </>
                 }
             </div>

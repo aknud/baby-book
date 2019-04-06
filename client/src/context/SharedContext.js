@@ -22,15 +22,7 @@ export default class SharedContext extends Component{
             photos: []
         }
     }
-
-    componentDidMount() {
-        // this.getMilestones()
-        // this.getNotes()
-        this.getPhotos()
-    }
     
-    
-
     getMilestones = () => {
         return authorizedAxios.get("/api/milestones")
             .then(res => {
