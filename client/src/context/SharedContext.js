@@ -56,7 +56,6 @@ export default class SharedContext extends Component{
     getPhotos = () => {
         return authorizedAxios.get("/api/photos")
             .then(res => {
-                console.log("response",res.data)
                 this.setState({ photos: res.data})
                 return res;
             })

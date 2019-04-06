@@ -7,6 +7,7 @@ import ProtectedRoute from './components/Auth/ProtectedRoute';
 import Milestones from "./components/Milestones"
 import Notes from "./components/Notes"
 import Photos from "./components/Photos"
+import NotFound from "./components/NotFound"
 import {withUser} from './context/UserProvider'
 
 const App = (props) => {
