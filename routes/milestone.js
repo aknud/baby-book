@@ -7,21 +7,33 @@ const Photo = require("../models/photo")
 milestoneRouter.route("/")
     .post( async (req, res, next) => {
         //send the image url to the Photo Schema
-        const newPhoto = new Photo({image: req.body.image})
-        //always do a try catch in async await db call otherwise it'll automatically throw an error
-        try {
-            const photo = await newPhoto.save()
-            // reassign req.body.image to equal photo id from db
-            req.body.image = photo._id
+        if(req.body.image){
+            const newPhoto = new Photo({image: req.body.image})
+            //always do a try catch in async await db call otherwise it'll automatically throw an error
+            try {
+                const photo = await newPhoto.save()
+                // reassign req.body.image to equal photo id from db
+                req.body.image = photo._id
+                const newMilestone = new Milestone(req.body)
+                //save the milestone with the photo._id in place of the image url
+                const savedMilestone = await newMilestone.save()
+                //send back both the milestone and the photo
+                return res.status(201).send({savedMilestone, photo})
+            }
+            catch (err) {
+                res.status(500)
+                return next(err)
+            }
+        } else {
             const newMilestone = new Milestone(req.body)
-            //save the milestone with the photo._id in place of the image url
-            const savedMilestone = await newMilestone.save()
-            //send back both the milestone and the photo
-            return res.status(201).send({savedMilestone, photo})
-        }
-        catch (err) {
-            res.status(500)
-            return next(err)
+            try {
+                const savedMilestone = await newMilestone.save()
+                return res.status(201).send(savedMilestone)
+            } 
+            catch(err){
+                res.status(500)
+                return next(err)
+            }
         }
     })
 

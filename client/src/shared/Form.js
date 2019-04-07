@@ -1,34 +1,61 @@
 import React, {useState} from 'react';
+import axios from "axios"
+const secureAxios = axios.create()
+
+secureAxios.interceptors.request.use(config => {
+    const token = localStorage.getItem("token")
+    config.headers.Authorization = `Bearer ${token}`
+    return config
+})
 
 const Form = (props) => {
     const initialInputs = {
         title: "",
         date: "",
-        image: "",
-        description: ""
+        description: "",
     }
     const [inputs, setInputs] = useState(initialInputs)
 
-    handleChange = e => {
+    const handleChange = e => {
         setInputs({
             ...inputs,
             [e.target.name]: e.target.value
         })
     }
-    handleSubmit = e => {
+    
+    const handleSubmit = e => {
         e.preventDefault()
-        //Do the things with the data
+        console.log('inputs',inputs)
+        secureAxios.post("/api/milestones", inputs).then(res => {
+            console.log("this is the response", res.data)
+        })
     }
 
     const {title, date, image, description} = inputs
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <input type="text" name={title} onChange={this.handleChange} value={}/>
-                <input type="text" name={date} onChange={this.handleChange} value={}/>
-                <input type="text" name={image} onChange={this.handleChange} value={}/>
-                <input type="text" name={description} onChange={this.handleChange} value={}/>
-                <button>{props.buttonText}</button>
+                <input 
+                    type="text" 
+                    name="title" 
+                    onChange={handleChange} 
+                    value={title}
+                    placeholder="Title" 
+                    required/>
+                <input 
+                    type="text" 
+                    name="date" 
+                    onChange={handleChange} 
+                    value={date}
+                    placeholder="Date" 
+                    required/>
+                <input 
+                    type="text" 
+                    name="description" 
+                    onChange={handleChange}
+                    placeholder="Description" 
+                    value={description}/>
+                <button>{props.btnText}</button>
             </form>
         </div>
     );
