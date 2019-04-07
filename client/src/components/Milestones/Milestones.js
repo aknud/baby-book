@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
-import { withContext } from '../context/SharedContext'
-import Toggle from "../shared/Toggle"
-import Form from "../shared/Form"
+import { withContext } from '../../context/SharedContext'
+import Toggle from "../../shared/Toggle"
+import Form from "../../shared/Form"
+import Milestone from "./../Milstone/Milestone"
 
 const Milestones = (props) => {
     const {milestones, user} = props
@@ -9,17 +10,7 @@ const Milestones = (props) => {
         props.getMilestones()
     }, [])
 
-    let mappedMilestones = milestones.map((item) => {
-        return (
-            <div key={item._id}>
-                <h1>{item.title}</h1>
-                <h3>{item.date}</h3>
-                <p>{item.description}</p>
-                {user.isAdmin && <button>edit</button> }
-                {user.isAdmin && <button>delete</button>}
-            </div>
-        )
-    })
+    let mappedMilestones = milestones.map((item) => <Milestone key={item._id} user={user} item={item}/>)
     return (
         <div>
             <h1>Milestones</h1>
