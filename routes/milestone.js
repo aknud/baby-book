@@ -92,5 +92,14 @@ milestoneRouter.route("/:_id")
         //     return res.status(200).send(milestone)
         // })
     })
+    .delete((req, res, next) => {
+        Milestone.findByIdAndDelete({_id: req.params._id}, (err, deletedMilestone) => {
+            if(err){
+                res.status(500)
+                return next(err)
+            }
+            return res.send(`Milestone with the id of  ${deletedMilestone._id} was deleted.`)
+        })
+    })
 
 module.exports = milestoneRouter
