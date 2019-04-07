@@ -14,7 +14,7 @@ class ImageUploader extends Component {
         super()
         this.state = {
             image: null,
-            url: "" || "http://via.placeholder.com/350x350",
+            url: "",
             progress: 0
         }
     }
@@ -30,18 +30,19 @@ class ImageUploader extends Component {
         const uploadTask = storage.ref(`images/${image.name}`).put(image)
         uploadTask.on("state_changed", 
         (snapshot) => {
-            //shows progress
+            //progress function
             const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
             this.setState({progress})
         }, (error) => {
+            //handles errors
             console.log(error)
         }, () => {
             //complete function // grab image from firebase and send to mongoDB
             storage.ref("images").child(image.name).getDownloadURL().then(url => {
                 this.setState({url})
+                console.log(this.state.url)
                 photoAxios.post("/api/photos", {image: url}).then(res => {
                     console.log("this is the response from photos", res.data)
-                    this.setState({url: ""})
                 })
             })
         })
@@ -49,7 +50,6 @@ class ImageUploader extends Component {
 
     render() {
         const style={
-            height: "90vh",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -57,11 +57,13 @@ class ImageUploader extends Component {
         }
         return (
             <div style={style}>
-                <progress />
+                <progress value={this.state.progress} max="100"></progress>
+                <h4>Progress: {this.state.progress}%</h4>
+                <br/>
                 <input type="file" name="" id="" onChange={this.handleChange}/>
                 <button onClick={this.handleUpload}>Upload Image</button>
                 <br/>
-                <img src={this.state.url} alt="" height="350" width="350"/>
+                <img src={this.state.url || "http://via.placeholder.com/350x250"} alt="" width="350" height="250"/>
             </div>
         );
     }
