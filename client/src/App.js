@@ -4,7 +4,7 @@ import './App.css';
 import Landing from "./components/Landing";
 import AuthContainer from "./components/Auth/AuthContainer";
 import ProtectedRoute from './components/Auth/ProtectedRoute';
-import Milestones from "./components/Milestones"
+import Milestones from "./components/Milestones/Milestones"
 import Notes from "./components/Notes"
 import Photos from "./components/Photos"
 import NotFound from "./components/NotFound"
