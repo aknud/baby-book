@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {withContext} from "../context/SharedContext"
 import axios from "axios"
 const secureAxios = axios.create()
 
@@ -25,13 +26,18 @@ const Form = (props) => {
     
     const handleSubmit = e => {
         e.preventDefault()
-        console.log('inputs',inputs)
-        secureAxios.post("/api/milestones", inputs).then(res => {
-            console.log("this is the response", res.data)
+        props.formType === "Note" ? 
+        secureAxios.post("/api/notes", inputs).then(res => {
+            props.getNotes()
         })
+        :
+        secureAxios.post("/api/milestones", inputs).then(res => {
+            props.getMilstones()
+        })
+        setInputs(initialInputs)
     }
 
-    const {title, date, image, description} = inputs
+    const {title, date, description} = inputs
     return (
         <div>
             <form onSubmit={handleSubmit}>
@@ -49,16 +55,28 @@ const Form = (props) => {
                     value={date}
                     placeholder="Date" 
                     required/>
-                <input 
-                    type="text" 
-                    name="description" 
-                    onChange={handleChange}
-                    placeholder="Description" 
-                    value={description}/>
+                {props.formType === "Note" ? 
+                    <input 
+                        type="text" 
+                        name="description" 
+                        onChange={handleChange}
+                        placeholder="Description" 
+                        value={description}
+                        required
+                    />
+                    :
+                    <input 
+                        type="text" 
+                        name="description" 
+                        onChange={handleChange}
+                        placeholder="Description" 
+                        value={description}
+                    />
+                }
                 <button>{props.btnText}</button>
             </form>
         </div>
     );
 };
 
-export default Form;
+export default withContext(Form);
