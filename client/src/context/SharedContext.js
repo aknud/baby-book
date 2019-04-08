@@ -23,6 +23,7 @@ export default class SharedContext extends Component{
         }
     }
     
+    // Milestones
     getMilestones = () => {
         return authorizedAxios.get("/api/milestones")
             .then(res => {
@@ -33,7 +34,6 @@ export default class SharedContext extends Component{
 
     editMilestone = (id, updatedObj) => {
         return authorizedAxios.put(`/api/milestones/${id}`, updatedObj).then(res => {
-            console.log(res.data)
             this.setState(prevState => ({
                 milestones: prevState.milestones.map(item => item._id === id ? item = res.data : item)
             }))
@@ -49,6 +49,7 @@ export default class SharedContext extends Component{
         })
     }
 
+    // Notes 
     getNotes = () => {
         return authorizedAxios.get("/api/notes")
             .then(res => {
@@ -63,6 +64,15 @@ export default class SharedContext extends Component{
         }).catch(err => console.log(err))
     }
 
+    editNote = (id, updatedObj) => {
+        return authorizedAxios.put(`/api/notes/${id}`, updatedObj).then(res => {
+            console.log("I actually ran")
+            this.setState(prevState => ({
+                notes: prevState.notes.map(note => note._id === id ? note = res.data : note)
+            }))
+        })
+    }
+
     deleteNote = id => {
         return authorizedAxios.delete(`/api/notes/${id}`).then(res => {
             this.setState(prevState => ({
@@ -71,6 +81,7 @@ export default class SharedContext extends Component{
         })
     }
 
+    // Photos
     getPhotos = () => {
         return authorizedAxios.get("/api/photos")
             .then(res => {
@@ -85,6 +96,7 @@ export default class SharedContext extends Component{
                 getMilestones: this.getMilestones,
                 deleteMilestone: this.deleteMilestone,
                 getNotes: this.getNotes,
+                editNote: this.editNote,
                 deleteNote: this.deleteNote,
                 createNote: this.createNote,
                 getPhotos: this.getPhotos,
