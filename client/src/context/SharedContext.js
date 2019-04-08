@@ -54,6 +54,14 @@ export default class SharedContext extends Component{
         }).catch(err => console.log(err))
     }
 
+    deleteNote = id => {
+        return authorizedAxios.delete(`/api/notes/${id}`).then(res => {
+            this.setState(prevState => ({
+                notes: prevState.notes.filter(note => note._id !== id)
+            }))
+        })
+    }
+
     getPhotos = () => {
         return authorizedAxios.get("/api/photos")
             .then(res => {
@@ -77,6 +85,7 @@ export default class SharedContext extends Component{
                 getMilestones: this.getMilestones,
                 deleteMilestone: this.deleteMilestone,
                 getNotes: this.getNotes,
+                deleteNote: this.deleteNote,
                 createNote: this.createNote,
                 getPhotos: this.getPhotos,
                 deletePhoto: this.deletePhoto,
