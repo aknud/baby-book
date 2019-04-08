@@ -1,20 +1,29 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { withContext } from '../context/SharedContext';
-import PhotoUploader from '../shared/PhotoUploader';
+import Toggle from "../shared/Toggle"
+import ImageUploader from '../shared/ImageUploader';
+import Photo from "./Photo.js/Photo"
 
 const Photos = (props) => {
-    let mappedPhotos = props.photos.map((pic, i) => {
-        return (
-            <div key={i + pic.image}>
-                <img src={pic.image} alt=""/>
-            </div>
-        )
-    })
+    const {user, photos} = props
+    useEffect(() => {
+        props.getPhotos()
+    }, [])
+
+    let mappedPhotos = photos.map(pic => <Photo user={user} key={pic._id} pic={pic}/>)
+
     return (
         <div>
             <h1>Photos</h1> 
-            {/* {mappedPhotos} */}
-            <PhotoUploader />
+            {user.isAdmin && <Toggle render={({on, toggler}) => {
+                return (
+                    <div>
+                        <button onClick={toggler}>{on ? "Close" : "Add New"}</button>
+                        {on && <ImageUploader />}
+                    </div>
+                )    
+            }}/>}
+            {mappedPhotos}
         </div>
     );
 };

@@ -89,6 +89,15 @@ export default class SharedContext extends Component{
                 return res;
             })
     }
+    deletePhoto = id => {
+        return authorizedAxios.delete(`/api/photos/${id}`).then(res => {
+            console.log(res.data)
+            this.setState(prevState => ({
+                photos: prevState.photos.filter(photo => photo._id !== id)
+            }))
+        })
+
+    }
 
     render(){
         return (
@@ -100,6 +109,7 @@ export default class SharedContext extends Component{
                 deleteNote: this.deleteNote,
                 createNote: this.createNote,
                 getPhotos: this.getPhotos,
+                deletePhoto: this.deletePhoto,
 
                 ...this.state
             }}>
