@@ -8,7 +8,7 @@ import Milestones from "./components/Milestones/Milestones"
 import Notes from "./components/Notes"
 import Photos from "./components/Photos"
 import NotFound from "./components/NotFound"
-import Nav from "./components/Nav"
+import Nav from "./components/Nav/Nav"
 import {withUser} from './context/UserProvider'
 
 const App = (props) => {
