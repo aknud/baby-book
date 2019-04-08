@@ -31,6 +31,15 @@ export default class SharedContext extends Component{
             })
     }
 
+    editMilestone = (id, updatedObj) => {
+        return authorizedAxios.put(`/api/milestones/${id}`, updatedObj).then(res => {
+            console.log(res.data)
+            this.setState(prevState => ({
+                milestones: prevState.milestones.map(item => item._id === id ? item = res.data : item)
+            }))
+        })
+    }
+
     deleteMilestone = id => {
         return authorizedAxios.delete(`/api/milestones/${id}`).then(res => {
             console.log(res.data)
