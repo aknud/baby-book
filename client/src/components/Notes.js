@@ -18,7 +18,7 @@ const Notes = (props) => {
                     return (
                         <div>
                             <button onClick={toggler}>{on ? "Close" : "Add new"}</button>
-                            {on && <Form formType="Note" btnText="Add Memory"/>}
+                            {on && <Form typeForm="Note" btnText="Add Memory"/>}
                         </div>
                     )
                 }}/>

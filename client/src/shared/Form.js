@@ -10,10 +10,11 @@ secureAxios.interceptors.request.use(config => {
 })
 
 const Form = (props) => {
+    const { data } = props
     const initialInputs = {
-        title: "",
-        date: "",
-        description: "",
+        title: data.title || "",
+        date: data.date || "",
+        description: data.description ||  "",
     }
     const [inputs, setInputs] = useState(initialInputs)
 
@@ -26,14 +27,19 @@ const Form = (props) => {
     
     const handleSubmit = e => {
         e.preventDefault()
-        props.formType === "Note" ? 
-        secureAxios.post("/api/notes", inputs).then(res => {
-            props.getNotes()
-        })
-        :
-        secureAxios.post("/api/milestones", inputs).then(res => {
-            props.getMilstones()
-        })
+        if(props.typeForm === "Note"){
+            secureAxios.post("/api/notes", inputs).then(res => {
+                props.getNotes()
+            })
+        } else if(props.typeForm === "Milestone"){
+            secureAxios.post("/api/milestones", inputs).then(res => {
+                props.getMilstones()
+            })
+        } else if(props.typeForm === "milestoneEdit"){
+            secureAxios.put(`/api/milestones/${props.data._id}`, inputs).then(res => {
+                props.getMilestones()
+            })
+        }
         setInputs(initialInputs)
     }
 
@@ -55,7 +61,7 @@ const Form = (props) => {
                     value={date}
                     placeholder="Date" 
                     required/>
-                {props.formType === "Note" ? 
+                {props.typeForm === "Note" ? 
                     <input 
                         type="text" 
                         name="description" 
