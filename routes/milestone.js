@@ -51,7 +51,6 @@ milestoneRouter.route("/:_id")
 
     .put( async (req, res, next) => {
         //First check to see if the image url changed ? send an update to Photos : only update milestone
-        console.log(222,req.body)
         try {
             if(req.body.image_url){
                 const updatedPhoto = await Photo.findOneAndUpdate({_id: req.body.image}, {image: req.body.image_url}, {new: true}, photo => res.status(200).send(photo))
