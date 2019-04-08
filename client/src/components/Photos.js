@@ -19,7 +19,7 @@ const Photos = (props) => {
                 return (
                     <div>
                         <button onClick={toggler}>{on ? "Close" : "Add New"}</button>
-                        {on && <ImageUploader />}
+                        {on && <ImageUploader getPhotos={props.getPhotos} />}
                     </div>
                 )    
             }}/>}

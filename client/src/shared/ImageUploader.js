@@ -40,9 +40,8 @@ class ImageUploader extends Component {
             //complete function // grab image from firebase and send to mongoDB
             storage.ref("images").child(image.name).getDownloadURL().then(url => {
                 this.setState({url})
-                console.log(this.state.url)
                 photoAxios.post("/api/photos", {image: url}).then(res => {
-                    console.log("this is the response from photos", res.data)
+                    this.props.getPhotos()
                 })
             })
         })
@@ -58,7 +57,7 @@ class ImageUploader extends Component {
         return (
             <div style={style}>
                 <progress value={this.state.progress} max="100"></progress>
-                <h4>Progress: {this.state.progress}%</h4>
+                <h4>{this.state.progress === 100 ? "Upload Complete" : `Progress: ${this.state.progress}%`}</h4>
                 <br/>
                 <input type="file" name="" id="" onChange={this.handleChange}/>
                 <button onClick={this.handleUpload}>Upload Image</button>
