@@ -31,13 +31,12 @@ const Form = (props) => {
         switch(props.typeForm){
             case "Milestone":
                 secureAxios.post("/api/milestones", inputs).then(res => {
-                    props.getMilstones()
+                    props.getMilestones()
                 })
                 break;
             case "milestoneEdit":
-                secureAxios.put(`/api/milestones/${props.data._id}`, inputs).then(res => {
-                    props.getMilestones()
-                })
+                props.editMilestone(props.data._id, inputs)
+                props.getMilestones()
                 break;
             case "Note":
                 secureAxios.post("/api/notes", inputs).then(res => {
@@ -45,13 +44,11 @@ const Form = (props) => {
                 })
                 break;
             case "noteEdit":
-                secureAxios.put(`/api/notes/${props.data._id}`, inputs).then(res => {
-                    props.getNotes()
-                    props.toggle.toggler()
-                })
+                props.editNote(props.data._id, inputs)
+                props.getNotes()
                 break;
         }
-        setInputs(initialInputs)
+        props.toggle.toggler()
     }
 
     const {title, date, description} = inputs

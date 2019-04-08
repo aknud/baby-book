@@ -9,7 +9,7 @@ const Notes = (props) => {
     useEffect(() => {
         props.getNotes()
     }, [])
-    let mappedMemories = notes.map(note => <Note key={note._id} note={note} user={user} /> )
+    let mappedMemories = notes.map(note => <Note key={note._id + Math.random()} note={note} user={user} /> )
     return (
         <div>
             <h1>Memories</h1>
@@ -18,7 +18,7 @@ const Notes = (props) => {
                     return (
                         <div>
                             <button onClick={toggler}>{on ? "Close" : "Add new"}</button>
-                            {on && <Form typeForm="Note" btnText="Add Memory"/>}
+                            {on && <Form typeForm="Note" btnText="Add Memory" toggle={{on, toggler}}/>}
                         </div>
                     )
                 }}/>

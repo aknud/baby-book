@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import siena from "../../assets/Siena-phone-bg.jpg"
+import { withContext } from '../../context/SharedContext';
 
 const styles = {
     backgroundImage: `url(${siena})`,
@@ -9,7 +10,14 @@ const styles = {
     height: "100vh"
 }
 
-const Landing = () => {
+const Landing = (props) => {
+
+    useEffect(() => {
+        props.getMilestones()
+        props.getNotes()
+        props.getPhotos()
+    }, [])
+
     return (
         <div style={styles}>
             <h1>Everything Siena</h1>
@@ -17,4 +25,4 @@ const Landing = () => {
     );
 };
 
-export default Landing;
+export default withContext(Landing);

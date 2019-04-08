@@ -10,7 +10,7 @@ const Milestones = (props) => {
         props.getMilestones()
     }, [])
 
-    let mappedMilestones = milestones.map((item) => <Milestone key={item._id} user={user} item={item}/>)
+    let mappedMilestones = milestones.map((item) => <Milestone key={item._id + Math.random()} user={user} item={item}/>)
     return (
         <div>
             <h1>Milestones</h1>
@@ -19,7 +19,7 @@ const Milestones = (props) => {
                     return (
                         <div>
                             <button onClick={toggler}>{on ? "Close" : "Add new"}</button>
-                            {on && <Form typeForm="Milestone" btnText="Add Milestone"/>}
+                            {on && <Form typeForm="Milestone" btnText="Add Milestone" toggle={{on, toggler}}/>}
                         </div>
                     )
                 }}/>

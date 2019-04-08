@@ -10,17 +10,16 @@ const Note = (props) => {
             <h1>{note.title}</h1>
             <h3>{note.date}</h3>
             <p>{note.description}</p>
-            {/* {user.isAdmin && <button onClick={() => editNote(note._id)}>edit</button> } */}
             {user.isAdmin && 
-                    <Toggle render={({on, toggler}) => {
-                        return (
-                            <div>
-                                <button onClick={toggler}>{on ? "cancel" : "edit"}</button>
-                                {on && <Form toggle={{on, toggler}} typeForm="noteEdit" data={note} btnText="Save"/>}
-                            </div>
-                        )
-                    }}/>
-                }
+                <Toggle render={({on, toggler}) => {
+                    return (
+                        <div>
+                            <button onClick={toggler}>{on ? "cancel" : "edit"}</button>
+                            {on && <Form toggle={{on, toggler}} typeForm="noteEdit" data={note} btnText="Save"/>}
+                        </div>
+                    )
+                }}/>
+            }
             {user.isAdmin && <button onClick={() => deleteNote(note._id)}>delete</button>}
         </div>
     );

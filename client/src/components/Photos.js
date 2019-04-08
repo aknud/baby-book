@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { withContext } from '../context/SharedContext';
 import Toggle from "../shared/Toggle"
 import ImageUploader from '../shared/ImageUploader';
@@ -6,9 +6,6 @@ import Photo from "./Photo.js/Photo"
 
 const Photos = (props) => {
     const {user, photos} = props
-    useEffect(() => {
-        props.getPhotos()
-    }, [])
 
     let mappedPhotos = photos.map(pic => <Photo user={user} key={pic._id} pic={pic}/>)
 

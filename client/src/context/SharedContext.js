@@ -58,15 +58,8 @@ export default class SharedContext extends Component{
             })
     }
 
-    createNote = newNote => {
-        return authorizedAxios.post("/api/notes", newNote).then(res => {
-            console.log(res)
-        }).catch(err => console.log(err))
-    }
-
     editNote = (id, updatedObj) => {
         return authorizedAxios.put(`/api/notes/${id}`, updatedObj).then(res => {
-            console.log("I actually ran")
             this.setState(prevState => ({
                 notes: prevState.notes.map(note => note._id === id ? note = res.data : note)
             }))
@@ -89,6 +82,14 @@ export default class SharedContext extends Component{
                 return res;
             })
     }
+    editPhoto = (id, updatedObj) => {
+        return authorizedAxios.put(`/api/photos/${id}`, updatedObj).then(res => {
+            this.setState(prevState => ({
+                photos: prevState.photos.map(photo => photo._id === id ? photo = res.data : photo)
+            }))
+        })
+    }
+
     deletePhoto = id => {
         return authorizedAxios.delete(`/api/photos/${id}`).then(res => {
             console.log(res.data)
@@ -103,14 +104,14 @@ export default class SharedContext extends Component{
         return (
             <Provider value={{
                 getMilestones: this.getMilestones,
+                editMilestone: this.editMilestone,
                 deleteMilestone: this.deleteMilestone,
                 getNotes: this.getNotes,
                 editNote: this.editNote,
                 deleteNote: this.deleteNote,
-                createNote: this.createNote,
                 getPhotos: this.getPhotos,
+                editPhoto: this.editPhoto,
                 deletePhoto: this.deletePhoto,
-
                 ...this.state
             }}>
                 {this.props.children}

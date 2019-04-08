@@ -37,7 +37,7 @@ photoRouter.route("/:_id")
     })
 
     .put((req, res, next) => {
-        Photo.findByIdAndUpdate({_id: req.params._id}, req.body, {new: true}, (err, photo) => {
+        Photo.findOneAndUpdate({_id: req.params._id}, req.body, {new: true}, (err, photo) => {
             if(err){
                 res.status(500)
                 return next(err)
@@ -47,7 +47,7 @@ photoRouter.route("/:_id")
     })
 
     .delete((req, res, next) => {
-        Photo.findByIdAndRemove({_id: req.params._id}, (err, deletedPhoto) => {
+        Photo.findOneAndRemove({_id: req.params._id}, (err, deletedPhoto) => {
             if(err){
                 res.status(500)
                 return next(err)
