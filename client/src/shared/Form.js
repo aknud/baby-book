@@ -12,9 +12,9 @@ secureAxios.interceptors.request.use(config => {
 const Form = (props) => {
     const { data } = props
     const initialInputs = {
-        title: data.title || "",
-        date: data.date || "",
-        description: data.description ||  "",
+        title: data ? data.title : "",
+        date: data ? data.date : "",
+        description: data ? data.description :  "",
     }
     const [inputs, setInputs] = useState(initialInputs)
 
@@ -27,18 +27,28 @@ const Form = (props) => {
     
     const handleSubmit = e => {
         e.preventDefault()
-        if(props.typeForm === "Note"){
-            secureAxios.post("/api/notes", inputs).then(res => {
-                props.getNotes()
-            })
-        } else if(props.typeForm === "Milestone"){
-            secureAxios.post("/api/milestones", inputs).then(res => {
-                props.getMilstones()
-            })
-        } else if(props.typeForm === "milestoneEdit"){
-            secureAxios.put(`/api/milestones/${props.data._id}`, inputs).then(res => {
-                props.getMilestones()
-            })
+        switch(props.typeForm){
+            case "Milestone":
+                secureAxios.post("/api/milestones", inputs).then(res => {
+                    props.getMilstones()
+                })
+                break;
+            case "milestoneEdit":
+                secureAxios.put(`/api/milestones/${props.data._id}`, inputs).then(res => {
+                    props.getMilestones()
+                })
+                break;
+            case "Note":
+                secureAxios.post("/api/notes", inputs).then(res => {
+                    props.getNotes()
+                })
+                break;
+            case "noteEdit":
+                secureAxios.put(`/api/notes/${props.data._id}`, inputs).then(res => {
+                    props.getNotes()
+                    props.toggle.toggler()
+                })
+                break;
         }
         setInputs(initialInputs)
     }

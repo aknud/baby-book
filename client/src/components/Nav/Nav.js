@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom"
-import Toggle from "../shared/Toggle"
+import Toggle from "../../shared/Toggle"
 
 const Nav = (props) => {
     return (

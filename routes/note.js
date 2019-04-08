@@ -53,9 +53,28 @@ noteRouter.route("/:_id")
             return res.send()
         })
     })
-    .put()
+    .put( async (req, res, next) => {
+        try {
+            if(req.body.image_url){
+                const updatedPhoto = await Photo.findOneAndUpdate({_id: req.body.image}, {image: req.body.image_url}, {new: true}, photo => res.status(200).send(photo))
+                req.body.image = updatedPhoto._id;const updatedNote = Note.findByOneAndUpdate({_id: req.params._id}, req.body, {new: true}, note => {
+                    return res.status(200).send(note)
+                }) 
+                return res.status(200).send(updatedNote, updatedPhoto)
+            } else {
+                const updatedNote = await Note.findOneAndUpdate({_id: req.params._id}, req.body, {new: true}, (note) => {
+                    return res.status(200).send(note)
+                })
+                return updatedNote
+            }
+        } 
+        catch(err) {
+            res.status(500)
+            return next(err)
+        }
+    })
     .delete((req,res, next) => {
-        Note.findByIdAndDelete({_id: req.params._id}, (err, deletedNote) => {
+        Note.findOneAndDelete({_id: req.params._id}, (err, deletedNote) => {
             if(err){
                 res.status(500)
                 return next(err)
