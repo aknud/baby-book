@@ -1,0 +1,16 @@
+.Landing {
+    background-image: url("../../assets/Siena-phone-bg.jpg");
+    background-position: 44% center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: calc(100vh - 56px);
+    opacity: 0.7;
+}
+.Landing > h1 {
+    font-family: 'Charmonman', cursive;
+    margin: 0 0 1.68rem 0;
+    padding-top: 40px;
+    color: #F2EAEA;
+    text-shadow: -3px 5px 10px rgb(41, 41, 41);
+
+}

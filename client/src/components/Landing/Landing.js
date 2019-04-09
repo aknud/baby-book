@@ -1,14 +1,6 @@
 import React, {useEffect} from 'react';
-import siena from "../../assets/Siena-phone-bg.jpg"
 import { withContext } from '../../context/SharedContext';
-
-const styles = {
-    backgroundImage: `url(${siena})`,
-    backgroundPosition: "center 70%",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    height: "100vh"
-}
+import "../Landing/Landing.css"
 
 const Landing = (props) => {
 
@@ -19,7 +11,7 @@ const Landing = (props) => {
     }, [])
 
     return (
-        <div style={styles}>
+        <div className="Landing">
             <h1>Everything Siena</h1>
         </div>
     );
