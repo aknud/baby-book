@@ -9,3 +9,7 @@ nav {
     color: #707070;
     font-family: 'Charmonman', cursive;
 }
+.nav-btn {
+    background-color: #f2eaea;
+    border: none;
+}

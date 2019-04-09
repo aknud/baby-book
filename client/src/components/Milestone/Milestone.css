@@ -1,8 +1,16 @@
 .card {
-    margin: 15px;
+    margin: 25px;
+    border-radius: 4px;
+    background-color: var(--main-bg-color);
 }
-
 .card-title {
     font-family: 'Charmonman', cursive;
     padding-top: 20px;
+}
+.card-action {
+    display: flex;
+    justify-content: space-evenly;
+}
+.card-action .m-btn {
+    background-color: var(--purple-color);
 }

@@ -55,12 +55,12 @@ class ImageUploader extends Component {
             justifyContent: "center"
         }
         return (
-            <div style={style}>
+            <div>
                 <progress value={this.state.progress} max="100"></progress>
                 <h4>{this.state.progress === 100 ? "Upload Complete" : `Progress: ${this.state.progress}%`}</h4>
-                <br/>
                 <input type="file" name="" id="" onChange={this.handleChange}/>
                 <button onClick={this.handleUpload}>Upload Image</button>
+                <br/>
                 <br/>
                 <img src={this.state.url || "http://via.placeholder.com/300x250"} alt="" width="300" height="250"/>
             </div>

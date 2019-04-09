@@ -2,7 +2,7 @@ import React from 'react';
 import { withContext } from '../context/SharedContext';
 import Toggle from "../shared/Toggle"
 import ImageUploader from '../shared/ImageUploader';
-import Photo from "./Photo.js/Photo"
+import Photo from "./Photo/Photo"
 
 const Photos = (props) => {
     const {user, photos} = props
