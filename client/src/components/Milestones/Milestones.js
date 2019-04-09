@@ -2,7 +2,8 @@ import React, {useEffect} from 'react';
 import { withContext } from '../../context/SharedContext'
 import Toggle from "../../shared/Toggle"
 import Form from "../../shared/Form"
-import Milestone from "./../Milstone/Milestone"
+import Milestone from "./../Milestone/Milestone"
+import "../Milestones/Milestones.css"
 
 const Milestones = (props) => {
     const {milestones, user} = props
@@ -12,7 +13,7 @@ const Milestones = (props) => {
 
     let mappedMilestones = milestones.map((item) => <Milestone key={item._id + Math.random()} user={user} item={item}/>)
     return (
-        <div>
+        <div className="Milestones">
             <h1>Milestones</h1>
             {user.isAdmin && 
                 <Toggle render={({on, toggler}) => {

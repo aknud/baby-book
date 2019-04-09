@@ -11,7 +11,7 @@ const Nav = (props) => {
                 <li className="sidenav-close"><Link to="/milestone">Milestones</Link></li>
                 <li className="sidenav-close"><Link to="/notes">Memories</Link></li>
                 <li className="sidenav-close"><Link to="/photos">Photos</Link></li>
-                <li className="sidenav-close" onClick={props.logout}><a>Logout</a></li>
+                <li className="sidenav-close" onClick={props.logout}><button className="nav-btn">Logout</button></li>
             </ul>
         </Navbar>
     );

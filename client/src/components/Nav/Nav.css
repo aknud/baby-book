@@ -5,8 +5,7 @@
 nav {
     background-color: #F2EAEA;
 }
-.sidenav li>a {
+.sidenav li>a, .nav-btn {
     color: #707070;
     font-family: 'Charmonman', cursive;
-
 }
