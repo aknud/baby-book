@@ -48,12 +48,6 @@ class ImageUploader extends Component {
     }
 
     render() {
-        const style={
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center"
-        }
         return (
             <div>
                 <progress value={this.state.progress} max="100"></progress>
@@ -62,7 +56,7 @@ class ImageUploader extends Component {
                 <button onClick={this.handleUpload}>Upload Image</button>
                 <br/>
                 <br/>
-                <img src={this.state.url || "http://via.placeholder.com/300x250"} alt="" width="300" height="250"/>
+                <img src={this.state.url || "http://via.placeholder.com/300x250"} alt="" width="300" height="250" style={{padding: 10}}/>
             </div>
         );
     }

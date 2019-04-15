@@ -1,16 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { withContext } from '../../context/SharedContext';
 import Toggle from "../../shared/Toggle"
 import "../Photo/Photo.css"
 
 const Photo = (props) => {
+    useEffect(()=> {
+        props.getPhotos()
+    },[])
     const {pic, user, editPhoto, deletePhoto} = props
     const initialCaption = {caption: pic.caption || ""}
     const [caption, setCaption] = useState(initialCaption)
-    const [toggle, setToggle] = useState(false)
 
     const handleChange = e => setCaption({caption: e.target.value})
-    const handleClick = () => setToggle(!toggle)
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -21,7 +22,7 @@ const Photo = (props) => {
     return (
         <div className="card med" key={pic._id}>
             <div className="card-image">
-                <img src={pic.image} alt="" width="300" height="250" borderRadius="7"/>
+                <img src={pic.image} alt="" width="300" height="250" borderradius="7"/>
             </div>
             {pic.caption ? <p>{pic.caption}</p> : null}
             <div className="card-action">

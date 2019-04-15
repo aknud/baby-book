@@ -18,7 +18,7 @@ const Milestone = (props) => {
                             return (
                                 <div>
                                     <button className="m-btn" onClick={toggler}>{on ? "cancel" : "edit"}</button>
-                                    {on && <Form typeForm="milestoneEdit" data={item} btnText="Save"/>}
+                                    {on && <Form typeForm="milestoneEdit" data={item} btnText="Save" toggle={{on, toggler}}/>}
                                 </div>
                             )
                         }}/>

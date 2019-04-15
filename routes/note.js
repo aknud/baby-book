@@ -57,7 +57,7 @@ noteRouter.route("/:_id")
         try {
             if(req.body.image_url){
                 const updatedPhoto = await Photo.findOneAndUpdate({_id: req.body.image}, {image: req.body.image_url}, {new: true}, photo => res.status(200).send(photo))
-                req.body.image = updatedPhoto._id;const updatedNote = Note.findByOneAndUpdate({_id: req.params._id}, req.body, {new: true}, note => {
+                req.body.image = updatedPhoto._id;const updatedNote = Note.findOneAndUpdate({_id: req.params._id}, req.body, {new: true}, note => {
                     return res.status(200).send(note)
                 }) 
                 return res.status(200).send(updatedNote, updatedPhoto)

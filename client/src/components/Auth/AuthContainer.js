@@ -2,6 +2,8 @@ import React from 'react';
 import AuthForm from './AuthForm';
 import { withUser } from '../../context/UserProvider';
 
+// NOTE: Display a message if you try to sign up with an existing user. 
+
 class AuthContainer extends React.Component{
     constructor(){
         super()

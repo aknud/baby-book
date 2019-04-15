@@ -92,7 +92,7 @@ milestoneRouter.route("/:_id")
         // })
     })
     .delete((req, res, next) => {
-        Milestone.findByIdAndDelete({_id: req.params._id}, (err, deletedMilestone) => {
+        Milestone.findOneAndDelete({_id: req.params._id}, (err, deletedMilestone) => {
             if(err){
                 res.status(500)
                 return next(err)
