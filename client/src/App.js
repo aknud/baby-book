@@ -18,7 +18,7 @@ const App = (props) => {
     <div className="App">
       {token && <Nav logout={logout}/> }
       <Switch>
-        <Route exact path="/" 
+        <Route exact path="/"
         render={routerProps => token ? <Redirect to="/landing"/> : <AuthContainer {...routerProps}/>}/>
         <ProtectedRoute token={token} path="/landing" redirectTo="/" component={Landing}/>
         <ProtectedRoute token={token} path="/milestone" user={user} component={Milestones} />

@@ -2,8 +2,6 @@ import React from 'react';
 import AuthForm from './AuthForm';
 import { withUser } from '../../context/UserProvider';
 
-// NOTE: Display a message if you try to sign up with an existing user. 
-
 class AuthContainer extends React.Component{
     constructor(){
         super()
@@ -29,6 +27,7 @@ class AuthContainer extends React.Component{
 
     handleFormSubmit = e => {
         e.preventDefault()
+        console.log(2222,this.props)
         const credentials = {
             username: this.state.username,
             password: this.state.password
@@ -36,7 +35,7 @@ class AuthContainer extends React.Component{
         this.state.authToggle ? this.props.signup(credentials) :
         this.props.login(credentials)
     }
-    
+
     render(){
        return (
             <div>
@@ -44,7 +43,7 @@ class AuthContainer extends React.Component{
                     this.state.authToggle ?
                         <>
                             <h3>Sign Up</h3>
-                            <AuthForm 
+                            <AuthForm
                                 handleChange={this.handleChange}
                                 handleSubmit={this.handleFormSubmit}
                                 username={this.state.username}
@@ -57,19 +56,19 @@ class AuthContainer extends React.Component{
                     :
                         <>
                             <h3>Login</h3>
-                            <AuthForm 
+                            <AuthForm
                                 handleChange={this.handleChange}
                                 handleSubmit={this.handleFormSubmit}
                                 username={this.state.username}
                                 password={this.state.password}
                                 btnText="Login"
                             />
-                            <p style={{color: "firebrick"}}>{this.props.errMsg}</p>
+                            {this.props.errMsg && <p style={{color: "firebrick"}}>{this.props.errMsg}</p>}
                             <p onClick={this.authToggler}>First time? Click to sign up!</p>
                         </>
                 }
             </div>
-        ); 
+        );
     }
 };
 

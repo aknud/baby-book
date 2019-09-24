@@ -13,7 +13,7 @@ const Milestone = (props) => {
                 <p>{item.date}</p>
                 <p>{item.description}</p>
                 <div className="card-action">
-                    {user.isAdmin && 
+                    {user.isAdmin &&
                         <Toggle render={({on, toggler}) => {
                             return (
                                 <div>
@@ -23,7 +23,7 @@ const Milestone = (props) => {
                             )
                         }}/>
                     }
-                    {user.isAdmin && 
+                    {user.isAdmin &&
                         <button className="m-btn" onClick={() => deleteMilestone(item._id)}>delete</button>
                     }
                 </div>

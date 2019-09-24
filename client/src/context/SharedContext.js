@@ -22,7 +22,7 @@ export default class SharedContext extends Component{
             photos: []
         }
     }
-    
+
     // Milestones
     getMilestones = () => {
         return authorizedAxios.get("/api/milestones")
@@ -49,7 +49,7 @@ export default class SharedContext extends Component{
         })
     }
 
-    // Notes 
+    // Notes
     getNotes = () => {
         return authorizedAxios.get("/api/notes")
             .then(res => {
@@ -122,7 +122,7 @@ export default class SharedContext extends Component{
 
 
 export const withContext = C => {
-    return props => 
+    return props =>
             <Consumer>
                 {value => <C {...value} {...props} />}
             </Consumer>

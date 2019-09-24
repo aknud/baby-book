@@ -21,7 +21,7 @@ export default class UserProvider extends Component {
 
     signup = credentials => {
         return userAxios.post("/auth/signup", credentials).then(res => {
-            const {user, token} = res.data 
+            const {user, token} = res.data
             this.setState({
                 user,
                 token,
@@ -29,12 +29,14 @@ export default class UserProvider extends Component {
             })
             // forward the response just in case it's needed down the promise chain.
             return res
-        }).catch(err => this.handleError(err.response.data.errMsg))
+        }).catch(err => {
+            this.handleError(err.response.data.message)
+        })
     }
 
     login = credentials => {
         return userAxios.post("/auth/login", credentials).then(res => {
-            const {user, token} = res.data 
+            const {user, token} = res.data
             localStorage.setItem("token", token)
             localStorage.setItem("user", JSON.stringify(user))
             this.setState({
@@ -70,14 +72,14 @@ export default class UserProvider extends Component {
                 }}>
                     {this.props.children}
                 </Provider>
-        
+
     }
 }
 
- 
+
 
 export const withUser = C => {
-    return props => 
+    return props =>
             <Consumer>
                 {value => <C {...value} {...props} />}
             </Consumer>

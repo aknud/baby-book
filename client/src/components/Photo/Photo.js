@@ -6,7 +6,7 @@ import "../Photo/Photo.css"
 const Photo = (props) => {
     useEffect(()=> {
         props.getPhotos()
-    },[])
+    })
     const {pic, user, editPhoto, deletePhoto} = props
     const initialCaption = {caption: pic.caption || ""}
     const [caption, setCaption] = useState(initialCaption)
@@ -21,18 +21,18 @@ const Photo = (props) => {
 
     return (
         <div className="card med" key={pic._id}>
-            <div className="card-image">
+            <div role="img" className="card-image">
                 <img src={pic.image} alt="" width="300" height="250" borderradius="7"/>
             </div>
             {pic.caption ? <p>{pic.caption}</p> : null}
-            <div className="card-action">
-            {user.isAdmin && 
+            <div role="contentinfo" className="card-action">
+            {user.isAdmin &&
                 <Toggle render={({on, toggler}) => {
                     return (
                         <div>
-                            {on && 
+                            {on &&
                                 <div>
-                                    <input type="text" value={caption.caption} onChange={handleChange}/>
+                                    <input aria-label="text" type="text" value={caption.caption} onChange={handleChange}/>
                                     <button onClick={handleSubmit}>Save</button>
                                 </div>
                             }

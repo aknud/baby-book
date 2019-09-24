@@ -12,10 +12,10 @@ authRouter.post("/signup", (req, res, next) => {
         if(err){
             res.status(500)
             return next(err)
-        } 
+        }
         // Checks to see if username exists. Throws an error.
         else if(existingUser !== null){
-            res.status(400)
+            res.status(401)
             return next(new Error("That username already exists!"))
         }
         // If the above conditions are not true, make a new user
@@ -46,12 +46,12 @@ authRouter.post("/login", (req, res, next) => {
             if(err){
                 res.status(500)
                 return next(err)
-            } 
+            }
             else if(!isMatch){
                 res.status(401)
                 return next(new Error({success: false, message: "Username or password are incorrect."}))
             }
-            // create token 
+            // create token
             const token = jwt.sign(user.withoutPassword(), process.env.SECRET)
             // send response
             return res.send(({success: true, user: user.withoutPassword(), token: token}))

@@ -3,16 +3,15 @@ const express = require("express")
 const mongoose = require("mongoose")
 const app = express()
 const expressJwt = require("express-jwt")
-const aws = require("aws-sdk")
 
 
-let {PORT, MONGODB_URI, SECRET, S3_BUCKET, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY} = process.env;
+let {PORT, MONGODB_URI, SECRET} = process.env;
 
 app.use(express.json())
 
 //connect to mongodb
 mongoose.set('useCreateIndex', true);
-mongoose.connect(MONGODB_URI || "mongodb://localhost:27017/baby-book", {useNewUrlParser: true}).then(() => console.log("Connected to MongoDB"))
+mongoose.connect(MONGODB_URI || "mongodb://localhost:27017/baby-book", {useNewUrlParser: true, useUnifiedTopology: true}).then(() => console.log("Connected to MongoDB")).catch((err) => console.log(err))
 
 app.use("/api", expressJwt({secret: SECRET}))
 

@@ -6,7 +6,7 @@ function ProtectedRoute(props){
     // rest allows you to add more props later for the component to use.
     const {token, path, redirectTo, component: Component, ...rest} = props;
     return (
-        token ? 
+        token ?
             <Route {...rest} path={path} render={renderProps => <Component {...renderProps} {...rest}/>}/> :
             <Redirect to={redirectTo} />
     )

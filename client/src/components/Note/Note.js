@@ -7,12 +7,12 @@ import "../Note/Note.css"
 const Note = (props) => {
     const {user, note, deleteNote} = props
     return (
-        <div className="card" key={note._id}>
+        <div role="listitem" className="card" key={note._id}>
             <h2 className="card-title">{note.title}</h2>
             <p>{note.date}</p>
             <p>{note.description}</p>
-            <div className="card-action">
-                {user.isAdmin && 
+            <div role="contentinfo" className="card-action">
+                {user.isAdmin &&
                     <Toggle render={({on, toggler}) => {
                         return (
                             <div>

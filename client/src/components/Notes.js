@@ -13,7 +13,7 @@ const Notes = (props) => {
     return (
         <div>
             <h1>Memories</h1>
-            {user.isAdmin && 
+            {user.isAdmin &&
                 <Toggle render={({on, toggler}) => {
                     return (
                         <div>

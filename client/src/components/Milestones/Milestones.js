@@ -11,11 +11,11 @@ const Milestones = (props) => {
         props.getMilestones()
     }, [])
 
-    let mappedMilestones = milestones.map((item) => <Milestone key={item._id + Math.random()} user={user} item={item}/>)
+    let mappedMilestones = milestones.map((item) => <Milestone role="listitem" key={item._id + Math.random()} user={user} item={item}/>)
     return (
-        <div className="Milestones">
+        <div role="list" className="Milestones">
             <h1>Milestones</h1>
-            {user.isAdmin && 
+            {user.isAdmin &&
                 <Toggle render={({on, toggler}) => {
                     return (
                         <div>

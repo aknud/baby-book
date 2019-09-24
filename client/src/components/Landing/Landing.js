@@ -11,7 +11,7 @@ const Landing = (props) => {
     }, [])
 
     return (
-        <div className="Landing">
+        <div role="banner" className="Landing">
             <h1>Everything Siena</h1>
         </div>
     );

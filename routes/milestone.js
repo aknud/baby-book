@@ -29,7 +29,7 @@ milestoneRouter.route("/")
             try {
                 const savedMilestone = await newMilestone.save()
                 return res.status(201).send(savedMilestone)
-            } 
+            }
             catch(err){
                 res.status(500)
                 return next(err)
@@ -82,7 +82,7 @@ milestoneRouter.route("/:_id")
             res.status(500)
             return next(err)
         }
-        
+
         // Milestone.findOneAndUpdate({_id: req.params._id}, req.body, {new: true}, (err, milestone) => {
         //     if(err){
         //         res.status(500)

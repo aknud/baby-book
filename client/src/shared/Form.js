@@ -25,7 +25,7 @@ const Form = (props) => {
             [e.target.name]: e.target.value
         })
     }
-    
+
     const handleSubmit = e => {
         e.preventDefault()
         switch(props.typeForm){
@@ -47,6 +47,7 @@ const Form = (props) => {
                 props.editNote(props.data._id, inputs)
                 props.getNotes()
                 break;
+            default:
         }
         props.toggle.toggler()
     }
@@ -55,35 +56,35 @@ const Form = (props) => {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <input 
-                    type="text" 
-                    name="title" 
-                    onChange={handleChange} 
+                <input
+                    type="text"
+                    name="title"
+                    onChange={handleChange}
                     value={title}
-                    placeholder="Title" 
+                    placeholder="Title"
                     required/>
-                <input 
-                    type="text" 
-                    name="date" 
-                    onChange={handleChange} 
+                <input
+                    type="text"
+                    name="date"
+                    onChange={handleChange}
                     value={date}
-                    placeholder="Date" 
+                    placeholder="Date"
                     required/>
-                {props.typeForm === "Note" ? 
-                    <input 
-                        type="text" 
-                        name="description" 
+                {props.typeForm === "Note" ?
+                    <input
+                        type="text"
+                        name="description"
                         onChange={handleChange}
-                        placeholder="Description" 
+                        placeholder="Description"
                         value={description}
                         required
                     />
                     :
-                    <input 
-                        type="text" 
-                        name="description" 
+                    <input
+                        type="text"
+                        name="description"
                         onChange={handleChange}
-                        placeholder="Description" 
+                        placeholder="Description"
                         value={description}
                     />
                 }
